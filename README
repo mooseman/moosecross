@@ -1,0 +1,11 @@
+
+****  Moosecross -  A public-domain crosstab app **** 
+
+Moosecross consists of a simple Python crosstab app to do crosstabs on csv files. 
+
+Additional apps in Ruby and Haskell are planned.  It is possible that one may also 
+be done in C++.   
+
+- mooseman 
+
+
