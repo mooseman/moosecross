@@ -11,17 +11,25 @@
 #  It is eventually planned to add "traffic-lighting" and 
 #  the ability to output the crosstab to HTML and text files. 
 
+import itertools 
+
 
 class crosstab(): 
    def init(self): 
       self.rowvar = self.colvar = self.sumvar = None 
 	  self.filedict = {} 
-	  self.keylist = []
-	  self.keys = dict(self.keylist)  
+	  self.headingslist = []
+	  self.linelist = [] 
+	  self.colslist = [] 
+	  
 	  	  
    def read(self, file, sep=","): 
-      myfile = open(file, 'r')
-	  self.keylist.append(myfile.readline()
+      self.myfile = open('testdata.csv', 'r')  
+	  for line in self.myfile.readlines(): 
+	      self.datalist.append(list(line.rstrip('\n').split(',') ))  
+      self.colslist = zip(*self.datalist) 	   		  
+	  self.headingslist = self.colslist[0]  
+	  
       
    def crosstab(self, rowvar, colvar, sumvar): 
       if self.filedict.has_key(rowvar) and 	\ 
