@@ -157,18 +157,6 @@ variables.
 {'count': ['20', '40', '25', '12', '37', '124', '42', '37', '46', '51', '11', '78', '145'], 'region': ['northern', 'northern', 'northern', 'northern', 'northern', 'northern', 'northern', 'western', 'western', 'western', 'western', 'western', 'western'], 'colour': ['red', 'red', 'red', 'red', 'blue', 'blue', 'blue', 'red', 'red', 'red', 'blue', 'blue', 'blue']}
 >>>
 
-*** How to read column lists into dict in one hit *** 
->>> b = {}
->>> for x in range(0,3):
-     ...     b.update({a[x][0]: a[x][1:]})
-     ... 
->>> b
-{'count': ['20', '40', '25', '12', '37', '124', '42', '37', '46', '51', '11', '78', '145'], 'region': ['northern', 'northern', 'northern', 'northern', 'northern', 'northern', 'northern', 'western', 'western', 'western', 'western', 'western', 'western'], 'colour': ['red', 'red', 'red', 'red', 'blue', 'blue', 'blue', 'red', 'red', 'red', 'blue', 'blue', 'blue']}
->>>
-
-
-
-
 
 
 
