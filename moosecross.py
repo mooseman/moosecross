@@ -1,59 +1,53 @@
 
 
-#  Moosecross.py - A simple crosstab app in Python 
+# A small Python app to do crosstabs. 
 
-#  This code is released to the public domain.  
-#  "Share and enjoy....."  :) 
+# This code is released to the public domain. 
 
-#  Note = as at now (4th June), this code is not working, but 
-#  it should be before much longer.  
-
-#  It is eventually planned to add "traffic-lighting" and 
-#  the ability to output the crosstab to HTML and text files. 
-
-import itertools 
+# Acknowledgements - This code was done with much help from 
+# Peter Sutton - http://uompeter.blogspot.com/ 
+# Many thanks, Peter!   
 
 
-class crosstab(): 
+import csv, sys 
+
+class crosstab(object):  
+
    def init(self): 
-      self.rowvar = self.colvar = self.sumvar = None 
-	  self.filedict = {} 
-	  self.headingslist = []
-	  self.linelist = [] 
-	  self.colslist = [] 
-	  
-	  	  
-   def read(self, file, sep=","): 
-      self.myfile = open('testdata.csv', 'r')  
-	  for line in self.myfile.readlines(): 
-	      self.datalist.append(list(line.rstrip('\n').split(',') ))  
-      self.colslist = zip(*self.datalist) 	   		  
-	  self.headingslist = self.colslist[0]  
-	  
-      
-   def crosstab(self, rowvar, colvar, sumvar): 
-      if self.filedict.has_key(rowvar) and 	\ 
-	     self.filedict.has_key(colvar) and  \  
-		 self.filedict.has_key(sumvar): 
-		 product = itertool.product(rowvar, colvar) 
-		 prodsum = reduce.... ''' to be finished ... ''' 
-		     
-   def display(self): 
-      print self.prodsum  
+      self.data = None 
+
+   def summarise(self, csv_path, has_header_row=True):
+       with open(csv_path) as csv_file:
+           csv_data = list(csv.reader(csv_file))[1 if has_header_row else 0:]
+       self.summary = {}
+       for region, colour, count in csv_data:
+           count = int(count)
+           if region in self.summary:
+               if colour in self.summary[region]:
+                   self.summary[region][colour] += count
+               else:
+                   self.summary[region][colour] = count
+           else:
+               self.summary[region] = {colour: count}  
+       self.data = self.summary                
+       return self.summary
 
 
-	  
+   def display(self):
+       for region, colour_count in self.summary.items():
+           print(region)
+           for colour, count in colour_count.items():
+               print("    {0}: {1:d}".format(colour, count))
+
+
 #  Run the code 
 a = crosstab() 
-
 a.init() 
-
-a.read('myfile.csv', sep=",")  
-
-a.crosstab("city", "salesman", "tot_sales") 	  
-
+a.summarise("testdata.csv") 
 a.display() 
 
-
-
+ 
+ 
+	
+	
 
