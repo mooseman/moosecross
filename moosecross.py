@@ -39,12 +39,20 @@ class crosstab(object):
            for colour, count in colour_count.items():
                print("    {0}: {1:d}".format(colour, count))
 
+   def test(self): 
+      for k, v in self.summary.items(): 
+         print k, v 
+         #print self.summary.items() 
+         
+         
 
 #  Run the code 
 a = crosstab() 
 a.init() 
 a.summarise("testdata.csv") 
 a.display() 
+a.test() 
+
 
  
  
