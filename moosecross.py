@@ -4,54 +4,41 @@
 
 # This code is released to the public domain. 
 
-# Acknowledgements - This code was done with much help from 
+# Acknowledgements - This code was done with help from 
 # Peter Sutton - http://uompeter.blogspot.com/ 
 # Many thanks, Peter!   
 
-
-import csv, sys 
-
+import itertools, csv, sys, types 
+from types import *   
+ 
+# See if we can use zip or iproduct to make the crosstab a bit more 
+# elegant.   
+ 
 class crosstab(object):  
-
-   def init(self): 
-      self.data = None 
-
    def summarise(self, csv_path, has_header_row=True):
        with open(csv_path) as csv_file:
            csv_data = list(csv.reader(csv_file))[1 if has_header_row else 0:]
-       self.summary = {}
-       for region, colour, count in csv_data:
-           count = int(count)
-           if region in self.summary:
-               if colour in self.summary[region]:
-                   self.summary[region][colour] += count
-               else:
-                   self.summary[region][colour] = count
+       self.summary = {} 
+                   
+       for region, colour, count in csv_data:    
+           # Create a composite key 
+           mykey = (region, colour)           
+           if self.summary.has_key(mykey):  
+              self.summary[mykey] += int(count)                    
            else:
-               self.summary[region] = {colour: count}  
-       self.data = self.summary                
+              self.summary.update({(mykey): int(count)} )        
        return self.summary
 
-
    def display(self):
-       for region, colour_count in self.summary.items():
-           print(region)
-           for colour, count in colour_count.items():
-               print("    {0}: {1:d}".format(colour, count))
-
-   def test(self): 
-      for k, v in self.summary.items(): 
-         print k, v 
-         #print self.summary.items() 
-         
-         
+       for item in self.summary.items():
+           print item 
+           
 
 #  Run the code 
 a = crosstab() 
-a.init() 
 a.summarise("testdata.csv") 
 a.display() 
-a.test() 
+
 
 
  
