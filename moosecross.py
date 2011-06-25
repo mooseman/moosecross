@@ -5,7 +5,7 @@
 # This code is released to the public domain. 
 # "Share and enjoy..."  :)    
 
-# Acknowledgements - The crosstab code was done with help from 
+# Acknowledgements - The crosstab class was done with help from 
 # Peter Sutton - http://uompeter.blogspot.com/ 
 # Many thanks, Peter!   
 
@@ -43,35 +43,56 @@ a.summarise("testdata.csv")
 #a.display() 
 
 
+
 #  Setup the curses window  
 stdscr = curses.initscr()
 curses.cbreak()
 stdscr.keypad(1)
 
+# Expand this to print col headings, row headings and 
+# data separately (using position lists for each). 
+def puttable(y, x, table):    
+   # Col headings 
+   stdscr.move(1, 15) 
+   (y, x) = stdscr.getyx()                          
+   stdscr.addstr(y, x, "Moosecross - Type Ctrl-G to quit...", curses.A_NORMAL )     
+   stdscr.move(3, 15) 
+   (y, x) = stdscr.getyx()                          
+   for key in table.summary.keys():     
+      stdscr.addstr(y, x, str(key[1]), curses.A_NORMAL )     
+      x += 5                     
+      stdscr.refresh() 
+   
+   # Row headings 
+   stdscr.move(5, 3) 
+   (y, x) = stdscr.getyx()                          
+   for key in table.summary.keys():     
+      stdscr.addstr(y, x, str(key[0]), curses.A_NORMAL )     
+      y += 1                     
+      stdscr.refresh() 
+   
+   # Data 
+   stdscr.move(5, 15) 
+   (y, x) = stdscr.getyx()                          
+   for val in table.summary.values():     
+      stdscr.addstr(y, x, str(val), curses.A_NORMAL )     
+      x += 5                     
+      stdscr.refresh() 
+
+
 try:
 
-    # Column headings 
-    colheads = list(chr(x) for x in range(65,70))     
-    poslist = list( (y,x) for y in range(2, 3) for 
-           x in range(7, 50, 7) )    
-    for x,y in zip(colheads, poslist): 
-        stdscr.addstr(y[0], y[1], str(x) )                    
-        stdscr.refresh() 	
-       
-    # Row headings     
-    rowheads = list(range(1,11))      
-    poslist = list( (y,x) for y in range(3, 15) for 
-           x in range(0, 1) )  
-    for x,y in zip(rowheads, poslist): 
-        stdscr.addstr(y[0], y[1], str(x) )                          
-        stdscr.refresh()   
+    # Print data 
+    stdscr.move(3, 5) 
+    (y, x) = stdscr.getyx()                      
+    puttable(y, x, a)  
     
     
     #  We do keyhandling here.   
     while (1): 
        c=stdscr.getch()	
        if c==curses.KEY_F2:  
-          stdscr.move(7, 20)
+          stdscr.move(10, 20)
           (y, x) = stdscr.getyx()                      
           stdscr.addstr(y, x, "Hi there!" )                          
           stdscr.refresh() 

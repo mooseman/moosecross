@@ -1,7 +1,9 @@
 
 ****  Moosecross -  A public-domain crosstab app **** 
 
-Moosecross consists of a simple Python crosstab app to do crosstabs on csv files. 
+Moosecross consists of a simple Python app 
+to do crosstabs on csv files. 
+The crosstab is displayed using curses.  
 This code is released to the public domain.  
 
 "Share and enjoy....."    ;-)  
